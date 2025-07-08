@@ -30,7 +30,8 @@ def initialize_trade_file_if_needed(price):
             writer = csv.writer(f)
             writer.writerow(["timestamp", "price"])
             writer.writerow([datetime.datetime.now().isoformat(), price])
-        send_notification(price)
+        message = f"🆕 Fichier trades.csv initialisé avec le prix actuel de l'ETF MSCI World : {price:.2f} €"
+        send_message(price)
         return True
     return False
 
