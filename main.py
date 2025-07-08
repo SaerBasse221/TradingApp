@@ -12,17 +12,6 @@ TELEGRAM_TOKEN = "7905223139:AAEWxb2NMTAAdc530vBgASfZF7fIXm1cvHA"
 TELEGRAM_CHAT_ID = 8018836005
 
 
-def send_notification(price):
-    message = f"📈 Achat simulé de l'ETF MSCI World à {price:.2f} €"
-    url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
-    payload = {'chat_id': TELEGRAM_CHAT_ID, 'text': message}
-    response = requests.post(url, data=payload)
-
-    if response.status_code != 200:
-        print("❌ Erreur d'envoi Telegram :", response.text)
-    else:
-        print("✅ Notification envoyée")
-
 def send_message(message):
     url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
     payload = {'chat_id': TELEGRAM_CHAT_ID, 'text': message}
@@ -67,7 +56,8 @@ def should_buy(current_price, last_price, threshold=0.0002):
 def main():
     ticker = yf.Ticker("EUNL.DE")
     price = ticker.history(period="1d")["Close"].iloc[-1]
-
+    last_price = get_last_trade_price()
+    variation = (last_price - price) / last_price
     print(f"📊 Prix actuel : {price:.2f} €")
 
     # Initialisation
@@ -82,10 +72,11 @@ def main():
     # Stratégie d'achat simple
     if should_buy(price, last_price):
         log_trade(price)
-        send_notification(price)
+        message = f"✅ Achat simulé de l'ETF MSCI World à {price:.2f} €\n 📊 Prix actuel : {price:.2f} €,\n 🔍 Variation depuis le dernier call: {-variation*100:.2f}% "
+        send_message(message)
     else:
         print("⏳ Pas d'achat simulé aujourd'hui.")
-        message = f"⏳ Pas d'achat simulé aujourd'hui. Prix actuel : {price:.2f} €"
+        message = f"⏳ Pas d'achat simulé aujourd'hui.\n 📊 Prix actuel : {price:.2f} €,\n 🔍 Variation depuis le dernier call: {-variation*100:.2f}% "
         send_message(message)
 
 if __name__ == "__main__":
