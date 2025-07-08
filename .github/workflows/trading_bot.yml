@@ -2,7 +2,7 @@ name: Trading Bot
 
 on:
   schedule:
-    - cron: '0 8,20 * * *'  # Exécute tous les jours à 8h et 20h UTC
+    - cron: '*/1 * * * *'   # ← toutes les minutes
   workflow_dispatch:         # Permet de le lancer à la main depuis GitHub
 
 jobs:
