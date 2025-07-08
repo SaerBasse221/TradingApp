@@ -1,0 +1,5 @@
+flask
+yfinance
+python-dotenv
+requests
+python-telegram-bot
