@@ -24,4 +24,4 @@ jobs:
 
     - name: Exécuter le bot
       run: |
-        python bot_trading.py
+        python main.py

@@ -8,14 +8,14 @@ from dotenv import load_dotenv
 
 # Charger les variables d'environnement
 load_dotenv()
-TOKEN = "7905223139:AAEWxb2NMTAAdc530vBgASfZF7fIXm1cvHA"
-CHAT_ID = 8018836005
+TELEGRAM_TOKEN = "7905223139:AAEWxb2NMTAAdc530vBgASfZF7fIXm1cvHA"
+TELEGRAM_CHAT_ID = 8018836005
 
 
 def send_notification(price):
     message = f"📈 Achat simulé de l'ETF MSCI World à {price:.2f} €"
-    url = f"https://api.telegram.org/bot{TOKEN}/sendMessage"
-    payload = {'chat_id': CHAT_ID, 'text': message}
+    url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
+    payload = {'chat_id': TELEGRAM_CHAT_ID, 'text': message}
     response = requests.post(url, data=payload)
 
     if response.status_code != 200:
@@ -24,8 +24,8 @@ def send_notification(price):
         print("✅ Notification envoyée")
 
 def send_message(message):
-    url = f"https://api.telegram.org/bot{TOKEN}/sendMessage"
-    payload = {'chat_id': CHAT_ID, 'text': message}
+    url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
+    payload = {'chat_id': TELEGRAM_CHAT_ID, 'text': message}
     response = requests.post(url, data=payload)
     if response.status_code != 200:
         print("❌ Erreur d'envoi Telegram :", response.text)
